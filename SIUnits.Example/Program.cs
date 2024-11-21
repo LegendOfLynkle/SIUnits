@@ -28,6 +28,12 @@ await using (var reader = await cmd.ExecuteReaderAsync())
 {
     while (await reader.ReadAsync())
     {
-        Console.WriteLine(reader.GetFieldValue<SIUnit>(0));
+        var res = reader.GetFieldValue<SIUnit>(0);
+        Console.WriteLine($"Value: {res.Value}, Unit:");
+        for (var ii = 0; ii < res.Units.Length; ii++)
+        {
+            var item = res.Units[ii];
+            Console.WriteLine($"[{ii}]: {item}");
+        }
     }
 }

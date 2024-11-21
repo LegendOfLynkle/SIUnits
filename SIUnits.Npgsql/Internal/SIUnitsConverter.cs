@@ -17,12 +17,14 @@ sealed class SIUnitsConverter : PgBufferedConverter<SIUnit>
     {
         // Again this is probably very wrong but the initial implementation is less important than actually getting here
         // to try and debug it
-        var valueBytes = reader.ReadBytes(8);
+        var test = reader.ReadDouble();
+        // var valueBytes = reader.ReadBytes(8);
         var unitBytes = reader.ReadBytes(8);
         // TODO: Pull out the relevant data from the bytes...
         return new SIUnit
         {
-            Value = BitConverter.ToDouble(valueBytes.FirstSpan),
+            // Value = BitConverter.ToDouble(valueBytes.FirstSpan),
+            Value = test,
             Units = (sbyte[])(Array)unitBytes.FirstSpan.ToArray()
         };
     }
@@ -31,7 +33,8 @@ sealed class SIUnitsConverter : PgBufferedConverter<SIUnit>
     {
         // This is probably wrong since I don't account for endianness but for now I'll take writing something over
         // writing nothing
-        writer.WriteBytes(BitConverter.GetBytes(value.Value));
+        writer.WriteDouble(value.Value);
+        // writer.WriteBytes(BitConverter.GetBytes(value.Value));
         writer.WriteBytes((byte[])(Array)value.Units);
     }
 }

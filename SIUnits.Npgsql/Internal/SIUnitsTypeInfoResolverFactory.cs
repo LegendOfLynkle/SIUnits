@@ -18,8 +18,7 @@ sealed class SIUnitsTypeInfoResolverFactory : PgTypeInfoResolverFactory
         private static TypeInfoMappingCollection AddMappings(TypeInfoMappingCollection mappings)
         {
             mappings.AddStructType<SIUnit>("unit", static (options, mapping, _) =>
-                mapping.CreateInfo(options, new SIUnitsConverter()));
-
+                mapping.CreateInfo(options, new SIUnitsConverter()), true);
             return mappings;
         }
 
